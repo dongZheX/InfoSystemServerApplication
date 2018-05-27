@@ -23,12 +23,13 @@ import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.*;
-
+import com.mysql.jdbc.SQLError;
 
 public class Frame extends JFrame implements ActionListener,MouseListener{
 	private File file;
 	private JButton import_Classbtn = new JButton("导入班级信息");
 	private JButton import_studentbtn = new JButton("导入学生信息");
+	private JButton import_teacherbtn = new JButton("导入老师信息");
 	private JButton command = new JButton("执行");
 	private JButton viewbtn = new JButton("浏览");
 	private JTextField sqlText = new JTextField("在此输入sql语句");
@@ -64,7 +65,7 @@ public class Frame extends JFrame implements ActionListener,MouseListener{
 		mainPanel.add(viewPanel);
 		mainPanel.add(btnPanel);
 		mainPanel.add(sqlPanel);
-		btnPanel.add(import_Classbtn);btnPanel.add(import_studentbtn);
+		btnPanel.add(import_Classbtn);btnPanel.add(import_studentbtn);btnPanel.add(import_teacherbtn);
 		//sqlText初设置
 		sqlText.setColumns(30);
 		sqlText.setForeground(Color.GRAY);
@@ -89,6 +90,7 @@ public class Frame extends JFrame implements ActionListener,MouseListener{
 		import_studentbtn.addActionListener(this);
 		sqlText.addActionListener(this);
 		sqlText.addMouseListener(this);
+		import_teacherbtn.addActionListener(this);
 		viewbtn.addActionListener(this);
 		command.addActionListener(this);
 	}
@@ -100,6 +102,7 @@ public class Frame extends JFrame implements ActionListener,MouseListener{
 			if(file!=null) {
 				try {
 					importClass.importFile(file);
+					new JOptionPane().showMessageDialog(this, "导入成功");
 				}catch (Exception e2) {
 					new JOptionPane().showMessageDialog(this, "导入班级错误");
 				}
@@ -110,6 +113,26 @@ public class Frame extends JFrame implements ActionListener,MouseListener{
 			if(file!=null&&(new JOptionPane().showConfirmDialog(this, "您确定要导入学生信息？"))==JOptionPane.YES_OPTION)
 				try {
 					importStudent.importFile(file);
+					new JOptionPane().showMessageDialog(this, "导入成功");
+				}catch (SQLException e2) {
+					// TODO: handle exception
+					new JOptionPane().showMessageDialog(this, "SQL错误");
+				}
+				catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+					new JOptionPane().showMessageDialog(this, "导入学生错误");
+				}
+		}
+		else if(action.equals("导入老师信息")) {
+			
+			if(file!=null&&(new JOptionPane().showConfirmDialog(this, "您确定要导入老师信息？"))==JOptionPane.YES_OPTION)
+				try {
+					importTeacher.importTeacher(file);
+					new JOptionPane().showMessageDialog(this, "导入成功");
+				}catch (SQLException e2) {
+					// TODO: handle exception
+					new JOptionPane().showMessageDialog(this, "SQL错误");
 				}
 				catch (Exception e1) {
 					// TODO Auto-generated catch block

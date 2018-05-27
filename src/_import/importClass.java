@@ -33,7 +33,9 @@ public class importClass {
 						e.printStackTrace();
 					}
 				}
+				String sql2 = "select * from class where Class_id = '"+cells[2].getContents()+"';";
 				
+				if((dbManager.executeQuery(sql2).next()))
 				proc.executeQuery();
 			}
 	   

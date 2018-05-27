@@ -1,15 +1,13 @@
 package _import;
 
 import java.io.File;
-import java.io.IOException;
 
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
-import jxl.read.biff.BiffException;
 
-public class importStudent {
-	public static void importFile(File file) throws Exception {
+public class importTeacher {
+	public static void importTeacher(File file) throws Exception {
 		//数据库连接
 		DBManager dbManager = DBManager.createInstance();
 	    dbManager.initDB();
@@ -24,14 +22,14 @@ public class importStudent {
 				Cell[] cells = sheet1.getRow(i);//获取每行
 				if(cells.length==0)
 					continue;
-				String sql_insert="insert into student_all values("; 
+				String sql_insert="insert into teacher values("; 
 				for(int j =0;j<cells.length;j++) {//获取每行的每个值
 					sql_insert+="'"+cells[j].getContents()+"',";
 				}
 				sql_insert = sql_insert.substring(0,sql_insert.length()-1);
 				sql_insert+=");";
 				System.out.println(sql_insert);
-				String sql2 = "select * from student_all where Sno = '"+cells[0].getContents()+"';";
+				String sql2 = "select * from teacher where Teach_course = '"+cells[1].getContents()+"';";
 				if(!dbManager.executeQuery(sql2).next())
 				dbManager.executeUpdate(sql_insert);
 				
