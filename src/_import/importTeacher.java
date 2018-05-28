@@ -30,7 +30,7 @@ public class importTeacher {
 				sql_insert+=");";
 				System.out.println(sql_insert);
 				String sql2 = "select * from teacher where Teach_course = '"+cells[1].getContents()+"';";
-				if(!dbManager.executeQuery(sql2).next())
+				
 				dbManager.executeUpdate(sql_insert);
 				
 			}

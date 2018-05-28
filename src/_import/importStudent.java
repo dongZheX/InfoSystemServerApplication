@@ -32,7 +32,7 @@ public class importStudent {
 				sql_insert+=");";
 				System.out.println(sql_insert);
 				String sql2 = "select * from student_all where Sno = '"+cells[0].getContents()+"';";
-				if(!dbManager.executeQuery(sql2).next())
+				
 				dbManager.executeUpdate(sql_insert);
 				
 			}
